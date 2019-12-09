@@ -1,0 +1,21 @@
+Trabajos
+
+    IMPORTANTE: Cada trabajo se ralizará de forma individual y deberá dar lugar a un documento en pdf que se enviará al profesor por correo electrónico (fcn AT dsic DOT upv DOT es). No se admiten documentos manuscritos escaneados. La notación matemática debe estar correctamente expresada (sumatorios con límites bien establecidos, subíndices y supraíndices correctamente expresados, etc.). El nombre del documento debe estar formado por los apellidos y el nombre del alumno (sin acentos ni blancos) seguido de un guión y el número del tema. Por ejemplo "CasacubertaNollaFrancisco-T3.pdf". 
+
+    T3: Técnicas de optimización. Fecha de entrega: 17 de octubre de 2019 a las 12h.
+        Demostrar que en cualquier problema de clasificación en C clases, la estimación de máxima verosimilitud de la probabilidad a priori de cada clase c, 1≤c≤C, es p̂c= nc/N donde N=n1+...+nC es el número total de datos observados y nc es el número de datos de la clase c. (ver el último ejemplo de aplicación de la técnica de los multiplicadores de Langrange, transparencias 3.17 y 3.18) Solución
+        Existe una variante de la función de Widrow-Hoff que incluye un término de regularización con el objetivo de que los pesos no se hagan demasiado grandes:
+
+        Aplicando la técnica de descenso por gradiente, obtener la correspondiente variante del algoritmo de Widrow-Hoff y la correspondiente versión muestra a muestra. Solución
+    T4: Máquinas de vectores soporte. Fecha de entrega: 28 de noviembre de 2019 a las 12h.
+        En el problema de la clasificación en C clases con SVM, comparar las técnicas basadas en votación y en DAGs (directed acyclic graphs) utilizando SVMs de dos clases con el subconjunto de los datos utilizados en clase de prácticas para las clases 0 a 3. Pasos:
+        1) extraer los datos de las clases 0 a 3;
+        2) separar un conjunto de entrenamiento y otro de test;
+        3) implementar (en octave) un clasificador de 4 clases mediante el método por votación (Transparencias 4.32 a 4.39) utilizando clasificadores de dos clases (libsvm);
+        4) implementar (en octave) un clasificador de 4 clases mediante el método DAG (Transparencia 4.40 y 4.41 y Ejercicio 10 del tema 4 en el boletín de ejercicios);
+        5) Comparar los mejores resultados obtenidos con el test en los apartados 3) y 4).
+    T5: Redes neuronales multicapa. Fecha de entrega: 20 de diciembre de 2019 a las 14h.
+        En el formato de las transparencias 5.31 y 5.32 (el número de transparencia puede cambiar (su cabecera es "algoritmo BackProp"),
+        1) escribir el algoritmo BackProp (batch e incremental) con momentum;
+        2) escribir el algoritmo BackProp (batch e incremental) con amortiguamiento;
+        3) escribir el algoritmo BackProp (batch e incremental) para clasificación (transparencia 5.41).
