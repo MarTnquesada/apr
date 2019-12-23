@@ -48,8 +48,10 @@ do
   for c=classes'
     % E step: Estimate zk
     ic=find(c==classes);
+    # idc is the vector containing the indexes to Nc samples (Ncx1)
     idc=find(xl==c);
     Nc=rows(idc);
+    # Xc is the vector containing Nc samples (Ncx4)
     Xc=X(idc,:);
     zk=[];
     for k=1:K
@@ -59,20 +61,32 @@ do
     maxzk=max(zk,[],2);
     zk=exp(zk-maxzk);
     sumzk=sum(zk,2);
-    zk=zk./sumzk;
+    # sum of all z in k dimension (vector of Ncx1)
+    zk=zk./sumzk; 
+    # log-likelihood
     L=L+Nc*log(pc(ic))+sum(maxzk+log(sumzk));
 
     % M step: parameter update
     % HERE YOUR CODE FOR PARAMETER ESTIMATION
-    for k=1:K
-      1
-      pkGc{ic}(:,k)=1/Nc*sum(zk(:,k));
-      2
-      mu{ic}(:,k)=(1/sum(zk(:,k)))*sum(zk(:,k).*X(idc,:));
-      mu{ic}(:,k)
-      3
-      sigma(ic,k)=(1/sum(zk(:,k)))*sum(zk(:,k).*(X(idc,:)-mu{ic}(:,k))*(X(idc,:)-mu{ic}(:,k))');
+    pkGc{ic} = 1/Nc*sum(zk);
+    size(pkGc{ic})
+    mu{ic} = (1/sum(zk)) * sum(zk.*Xc,1)'; 
+    size(mu{ic})
+    #creo que mu y pkGc estan bien
+    aux=[];
+    for n=1:Nc
+      aux(:,n) = (Xc(n).-(mu{ic})')*(Xc(n).-(mu{ic})')';
     end
+    size(aux)
+    sigma{ic} = (1/sum(zk)) * sum(zk.*aux); 
+    %for k=1:K
+      %1
+      %pkGc{ic}(:,k)=1/Nc*sum(zk(:,k));
+      %2
+      %mu{ic}(:,k)=(1/sum(zk(:,k)))*sum(zk(:,k).*X(idc,:));
+      %3
+      %sigma(ic,k)=(1/sum(zk(:,k)))*sum(zk(:,k).*(X(idc,:)-mu{ic}(:,k))*(X(idc,:)-mu{ic}(:,k))');
+    %end
   end
   % Likelihood divided by the number of training samples
   L=L/N;
