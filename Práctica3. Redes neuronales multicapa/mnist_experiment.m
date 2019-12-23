@@ -29,7 +29,7 @@ mValidInput=mInput(:,indices((nTr+1):nSamples));
 mValidOutput=mOutput(indices((nTr+1):nSamples));
 nclasses = size(unique(mTrainOutput), 2);
 # number of neurons in the hidden layer and in the output layer
-nHidden=1;
+nHidden=10;
 nOutput=nclasses;
 # transform labels to one-hot-encoding format
 trainoutDisp=[mTrainOutput; zeros(nclasses-1,columns(mTrainOutput))]; 
@@ -38,7 +38,6 @@ for i=1:size(trainoutDisp,2)
   trainoutDisp(:, i)=zeros(nclasses,1); 
   trainoutDisp(class, i)=1;
 endfor
-size(trainoutDisp,2)
 validoutDisp=[mValidOutput; zeros(nclasses-1,columns(mValidOutput))];
 for i=1:size(validoutDisp,2)  
   class=validoutDisp(1, i) + 1;
@@ -65,10 +64,12 @@ net=train(MLPnet,mTrainInputN,trainoutDisp,[],[],VV);
 mTestInputN=trastd(mTestInput,cMeanInput,cStdInput);
 # classify data
 simOut = sim(net,mTestInputN);
-#simOut returns the actual output of each neuron.
+# simOut returns the actual output of each neuron.
 # we should get the class with higher output and compare it with the test labels (tslabels)
 # indices can be compared directly against mTestOutput
 [max_values indices] = max(simOut);
+# correct the predicted classes so that they start from 0 again (see line 37 & 43)
+indices = indices - 1;
 accuracy = sum(indices==mTestOutput)/length(indices);
 interval = 1.96*sqrt((accuracy*(1-accuracy))/length(indices));
 disp("Accuracy:");
