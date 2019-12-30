@@ -6,7 +6,7 @@ load ../../MNIST/t10k-images-idx3-ubyte.mat.gz #Y
 load ../../MNIST/t10k-labels-idx1-ubyte.mat.gz #yl
 
 #train svm
-svm = svmtrain(xl, X, '-t 1 -c 1');
+svm = svmtrain(xl, X, '-t 0 -c 100');
 predictions=svmpredict(yl,Y,svm,"-q");
 #display results
 disp("Accuracy")
