@@ -29,7 +29,6 @@ for a = 1:columns(components)
   for k=mink:stepk:maxk
     YR=(W(:,1:k)'*(Y-m)')';
     XR=(W(:,1:k)'*(X-m)')';
-    kk=1;
     err=mixgaussian(XR,xl,YR,yl,components(1,a),alpha);
     errvector(1,end+1) = err;
     printf("k: %3f  | error: %3.2f \n", k, err);
@@ -41,7 +40,7 @@ plot(kvector, errmatrix);
 xlabel("Dimensionalidad espacio PCA");
 ylabel("Error(%)");
 axis([mink, maxk, 4, 11])
-legend("components=1", "components=2", "components=5", "acomponents=10");
+legend("components=1", "components=2", "components=5", "components=10");
 refresh();
 input("Graph shown");
-%print -djpg 5-3.jpg;
+print -djpg 5-3.jpg;

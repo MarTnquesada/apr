@@ -65,23 +65,15 @@ do
     zk=zk./sumzk; 
     # log-likelihood
     L=L+Nc*log(pc(ic))+sum(maxzk+log(sumzk));
-
     % M step: parameter update
     % HERE YOUR CODE FOR PARAMETER ESTIMATION
-    3
-    pkGc{ic} = 1/Nc*sum(zk);
-    %size(pkGc{ic})
-    mu{ic} = (1/sum(zk)) * sum(zk.*Xc,1)'; 
-    %size(mu{ic})
-    #creo que mu y pkGc estan bien
-    aux = (Xc.-(mu{ic})')'*(Xc.-(mu{ic})');
-    %size(aux)
-
+    pkGc{ic}=(1/Nc)*sum(zk);
+    mu{ic}= (Xc'*zk)./sum(zk);
     for k=1:K
-      sigma{ic,k} = (1/zk(:,k)) * zk(:,k).*aux;
-      %sigma{ic,k} = (1/sum(zk)) * sum(zk.*aux); 
-      sigma{ic,k} = alpha*sigma{ic,k}+(1-alpha)*eye(D);
-      %size(sigma{ic,k})
+      aux = (zk(:,k).*(Xc-(mu{ic}(:,k))'))';
+      aux = aux*(Xc-(mu{ic}(:,k))');
+      aux = aux/sum(zk(:,k));
+      sigma{ic,k} = alpha*aux+(1-alpha)*eye(D);
     end
   end
   % Likelihood divided by the number of training samples
