@@ -44,4 +44,4 @@ axis([mink, maxk, 4, 11])
 legend("components=1", "components=2", "components=5", "acomponents=10");
 refresh();
 input("Graph shown");
-print -djpg 5-3.jpg;
+%print -djpg 5-3.jpg;

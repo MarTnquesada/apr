@@ -68,25 +68,21 @@ do
 
     % M step: parameter update
     % HERE YOUR CODE FOR PARAMETER ESTIMATION
+    3
     pkGc{ic} = 1/Nc*sum(zk);
-    size(pkGc{ic})
+    %size(pkGc{ic})
     mu{ic} = (1/sum(zk)) * sum(zk.*Xc,1)'; 
-    size(mu{ic})
+    %size(mu{ic})
     #creo que mu y pkGc estan bien
-    aux=[];
-    for n=1:Nc
-      aux(:,n) = (Xc(n).-(mu{ic})')*(Xc(n).-(mu{ic})')';
+    aux = (Xc.-(mu{ic})')'*(Xc.-(mu{ic})');
+    %size(aux)
+
+    for k=1:K
+      sigma{ic,k} = (1/zk(:,k)) * zk(:,k).*aux;
+      %sigma{ic,k} = (1/sum(zk)) * sum(zk.*aux); 
+      sigma{ic,k} = alpha*sigma{ic,k}+(1-alpha)*eye(D);
+      %size(sigma{ic,k})
     end
-    size(aux)
-    sigma{ic} = (1/sum(zk)) * sum(zk.*aux); 
-    %for k=1:K
-      %1
-      %pkGc{ic}(:,k)=1/Nc*sum(zk(:,k));
-      %2
-      %mu{ic}(:,k)=(1/sum(zk(:,k)))*sum(zk(:,k).*X(idc,:));
-      %3
-      %sigma(ic,k)=(1/sum(zk(:,k)))*sum(zk(:,k).*(X(idc,:)-mu{ic}(:,k))*(X(idc,:)-mu{ic}(:,k))');
-    %end
   end
   % Likelihood divided by the number of training samples
   L=L/N;
