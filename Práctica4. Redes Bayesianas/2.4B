@@ -5,15 +5,27 @@ grafo(P, C) = 1;
 grafo(F, C) = 1
 grafo(C, [R D]) = 1;
 nodosDiscretos = 1:N;
-tallaNodos = 2 * ones(1, N);
+tallaNodos = [2 2 2 3 2]; % not all nodes are binary, so we have to specify individual sizes
 redB = mk_bnet(grafo, tallaNodos, 'discrete', nodosDiscretos);
 redB.CPD{P} = tabular_CPD(redB, P, [0.9 0.1]);
 redB.CPD{F} = tabular_CPD(redB, F, [0.7 0.3]);
-redB.CPD{C} = tabular_CPD(redB, C, [0.001 0.03 0.05 0.08]);
-redB.CPD{R} = tabular_CPD(redB, R, [0.1 0.7]); % correct? the node can have 3 values
-redB.CPD{D} = tabular_CPD(redB, D, [0.3 0.65]);
+redB.CPD{C} = tabular_CPD(redB, C, [0.999 0.97 0.95 0.92 0.001 0.03 0.05 0.08]);
+redB.CPD{R} = tabular_CPD(redB, R, [0.8 0.1 0.1 0.2 0.1 0.7]); 
+redB.CPD{D} = tabular_CPD(redB, D, [0.7 0.35 0.3 0.65]);
 
-
-
+% ¿Cual es la probabilidad de que un paciente no fumador no tenga cancer de pulmón si la radiografía ha dado un resultado negativo pero sufre disnea?
+motor = jtree_inf_engine(redB);
+evidencia = cell(1,N);
+evidencia{F} = 1;
+evidencia{R} = 1;
+evidencia{D} = 2;
+[motor, ll] = enter_evidence(motor, evidencia);
+m = marginal_nodes(motor, C);
+m.T
+% ¿Cual es la explicacion mas probable de que un paciente sufra cancer de pulmón?
+motor = jtree_inf_engine(redB);
+evidencia = cell(1,N);
+evidencia{C} = 2;
+[explMaxProb, logVerosim] = calc_mpe(motor, evidencia)
 
 
